@@ -1,5 +1,5 @@
 require('dotenv').config();
-const port = process.env.PORT || 3000,
+const port = process.env.PORT || 5000,
 express = require('express'),
 app = express(),
 db = require('./models'),
@@ -7,9 +7,12 @@ cors = require('cors'),
 bodyParser = require('body-parser'),
 passport = require('passport'),
 LocalStrategy = require('./passport/local'),
-JWTStrategy = require('./passport/jwt');
+JWTStrategy = require('./passport/jwt'),
+morgan = require('morgan')
 
 app.use(cors());
+app.use(morgan('dev'));
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -18,7 +21,8 @@ passport.use('jwt', JWTStrategy);
 app.use(passport.initialize());
 
 app.use('/auth', require('./routes/auth'));
-app.use('/users', require('./routes/users'));
+app.use('/api/users', require('./routes/users'));
+app.use('/api/books', require('./routes/books'));
 
 app.listen(port, () => {
     console.log(`Servidor corriendo en puerto ${port}`);

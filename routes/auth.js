@@ -1,7 +1,7 @@
 const { body, validationResult } = require("express-validator");
 const express = require("express"),
   router = express.Router(),
-  { _create, _findByUsername } = require("../controllers/users");
+  { _create, _findByUsername, _finByEmail } = require("../controllers/users");
 (passport = require("passport")), (jwt = require("jsonwebtoken"));
 
 router.post("/signin", async (req, res, next) => {
@@ -21,6 +21,15 @@ router.post("/signin", async (req, res, next) => {
     }
   )(req, res, next);
 });
+
+// Ruta protegida
+router.get(
+  "/protected",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json({ message: "Ruta protegida", user: req.user });
+  }
+);
 
 router.post(
   "/signup",
@@ -45,6 +54,11 @@ router.post(
         return res
           .status(400)
           .json(`El usuario ${foundUser.username} ya existe`);
+      }
+
+      const foundEmail = await _finByEmail(req.body.correo);
+      if (foundEmail) {
+        return res.status(400).json(`El correo ${foundEmail.correo} ya existe`);
       }
 
       const user = await _create(req.body);

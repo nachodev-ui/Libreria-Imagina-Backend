@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize-oracle');
 
-module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('user', {
+module.exports = (sequelize) => {
+    return sequelize.define('users', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
@@ -22,10 +22,11 @@ module.exports = (sequelize, DataTypes) => {
             type: Sequelize.STRING,
             required: true,
             allowNull: false,
-            len: [8, 20]          
+            len: [5, 20]          
         }
     }, {
         underscored: true,
         paranoid: true,
+        tableName: 'users'
     })
 }

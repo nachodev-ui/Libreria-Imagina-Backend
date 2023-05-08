@@ -6,7 +6,7 @@ async function create(user) {
     if (!user.password) throw new Error('La contraseña es obligatoria');
     if (!user.correo) throw new Error('El correo es obligatorio');
 
-    return await db.user.create({
+    return await db.users.create({
         username: user.username,
         correo: user.correo,
         password: bcrypt.hashSync(user.password, 10)
