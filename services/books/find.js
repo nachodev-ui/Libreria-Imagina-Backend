@@ -1,7 +1,7 @@
 const db = require("../../models");
 
 async function findBooks() {
-  return await db.books.findAll({
+  return await db.book.findAll({
     attributes: [
       "id",
       "isbn",

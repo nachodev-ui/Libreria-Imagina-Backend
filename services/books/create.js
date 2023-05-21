@@ -14,7 +14,7 @@ async function createBook(book) {
     if (!book.descripcion) throw new Error('La descripcion es obligatoria');
     if (!book.stock) throw new Error('El stock es obligatorio');
 
-    return await db.books.create({
+    return await db.book.create({
         isbn: book.isbn,
         titulo: book.titulo,
         autor: book.autor,

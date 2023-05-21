@@ -1,5 +1,5 @@
 const { create } = require('../services/users/create');
-const { findByUsername, findByEmail, findAll, deleteUser } = require('../services/users/find');
+const { findByUsername, findByEmail, findAll, deleteUser, userId } = require('../services/users/find');
 
 async function _create(user) {
     return await create(user);
@@ -7,6 +7,10 @@ async function _create(user) {
 
 async function _deleteUser(id) {
     return await deleteUser(id);
+}
+
+async function _userId(id) {
+    return await userId(id);
 }
 
 async function _findByUsername(username) {
@@ -26,5 +30,6 @@ module.exports = {
     _findByUsername, 
     _findByEmail,
     _findAll,
-    _deleteUser
+    _deleteUser,
+    _userId
 }

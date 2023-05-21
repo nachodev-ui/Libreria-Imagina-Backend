@@ -1,34 +1,40 @@
-require('dotenv').config();
+require("dotenv").config();
 const port = process.env.PORT || 5000,
-express = require('express'),
-app = express(),
-db = require('./models'),
-cors = require('cors'),
-bodyParser = require('body-parser'),
-passport = require('passport'),
-LocalStrategy = require('./passport/local'),
-JWTStrategy = require('./passport/jwt'),
-morgan = require('morgan')
+  express = require("express"),
+  app = express(),
+  db = require("./models"),
+  cors = require("cors"),
+  bodyParser = require("body-parser"),
+  passport = require("passport"),
+  LocalStrategy = require("./passport/local"),
+  JWTStrategy = require("./passport/jwt"),
+  morgan = require("morgan"),
+  axios = require('axios'),
+  transbankRoutes = require('./routes/transbank')
 
 app.use(cors());
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-passport.use('local', LocalStrategy);
-passport.use('jwt', JWTStrategy);
+passport.use("local", LocalStrategy);
+passport.use("jwt", JWTStrategy);
 app.use(passport.initialize());
 
-app.use('/auth', require('./routes/auth'));
-app.use('/api/users', require('./routes/users'));
-app.use('/api/books', require('./routes/books'));
+app.use("/auth", require("./routes/auth"))
+app.use("/api/users", require("./routes/users"))
+app.use("/api/books", require("./routes/books"))
+app.use("/api/technicians", require("./routes/technician"))
+app.use("/api/requests", require("./routes/request"))
+app.use("cart", require("./routes/cart"))
+app.use('/', transbankRoutes)
 
 app.listen(port, () => {
-    console.log(`Servidor corriendo en puerto ${port}`);
+  console.log(`Servidor corriendo en puerto ${port}`);
 });
 
 db.sequelize
-    .sync({ force: false })
-    .then(() => console.log('Conectado a la base de datos'))
-    .catch((e) => console.log(`Error => ${e}`));
+  .sync({ force: false })
+  .then(() => console.log("Conectado a la base de datos"))
+  .catch((e) => console.log(`Error => ${e}`));

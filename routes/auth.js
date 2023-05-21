@@ -22,15 +22,6 @@ router.post("/signin", async (req, res, next) => {
   )(req, res, next);
 });
 
-// Ruta protegida
-router.get(
-  "/protected",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.json({ message: "Ruta protegida", user: req.user });
-  }
-);
-
 router.post(
   "/signup",
   [

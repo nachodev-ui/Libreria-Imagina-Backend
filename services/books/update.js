@@ -2,7 +2,7 @@ const db = require("../../models");
 
 async function updateBook(id, fieldsToUpdate) {
   try {
-    const book = await db.books.findById(id);
+    const book = await db.book.findById(id);
 
     if (!book) {
       throw new Error("El libro no existe");

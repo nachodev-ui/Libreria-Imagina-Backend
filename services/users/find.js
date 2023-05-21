@@ -22,6 +22,15 @@ async function deleteUser(id) {
   }
 }
 
+async function userId(id) {
+  if (!id) throw new Error("Id de usuario no proporcionado");
+  return await db.users.findOne({
+    where: {
+      id,
+    },
+  });
+}
+
 async function findByUsername(username) {
   if (!username) throw new Error("Nombre de usuario no proporcionado");
   return await db.users.findOne({
@@ -51,4 +60,5 @@ module.exports = {
   findByUsername,
   findByEmail,
   findAll,
+  userId,
 };
