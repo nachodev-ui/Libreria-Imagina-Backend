@@ -25,11 +25,21 @@ module.exports = (sequelize) => {
         required: true,
         allowNull: false,
       },
-      id_technician: {
+      estado: {
+        type: Sequelize.STRING,
+        required: true,
+        allowNull: false,
+      },
+      id_user: {
         type: Sequelize.INTEGER,
         required: true,
         allowNull: false,
       },
+      correo: {
+        type: Sequelize.STRING,
+        required: true,
+        allowNull: false,
+      }
     },
     {
       underscored: true,
@@ -39,9 +49,8 @@ module.exports = (sequelize) => {
   );
 
   Maintenance.associate = (models) => {
-    Maintenance.belongsTo(models.technician, {
-      foreignKey: "id_technician",
-      as: "technician",
+    Maintenance.belongsTo(models.users, {
+      as: "user",
     });
   };
 
